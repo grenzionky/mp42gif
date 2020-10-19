@@ -4,11 +4,7 @@ from aqt import mw
 from aqt.utils import showInfo
 from aqt.qt import *
 import re, subprocess
-<<<<<<< HEAD
 from . import ffmpeg
-=======
-#import ffmpeg
->>>>>>> main
 
 def setupMenu(browser):
   def mp42gif(browser):
@@ -27,25 +23,14 @@ def setupMenu(browser):
         fields = mw.col.models.fieldNames(note.model())
         for field in fields:
           # now convert the actual mp4 into a gif
-<<<<<<< HEAD
-          for name in re.findall(r'\[sound:(.*?)\.ogv\]', note[field]):
-            mp4 = re.sub(r"(?i)\.(anki2)$", ".media", mw.col.path)+"/"+name
-            ffmpeg.input(mp4+".ogv").video.filter("scale", 480, -1).output(mp4+".gif", framerate=30).overwrite_output().run_async()
-            # subprocess.run(["ffmpeg","-i",mp4+".ogv","-r","30","-vf","scale=480:-1",mp4+".gif","-y"])
-
-          # edit html of any field with a mp4 video into gif format
-          oldnote = note[field]
-          note[field] = re.sub(r'\[sound:(.*?)\.ogv\]', r'<img src="\1.gif" />', note[field])
-=======
           for name in re.findall(r'\[sound:(.*?)\.mp4\]', note[field]):
             mp4 = re.sub(r"(?i)\.(anki2)$", ".media", mw.col.path)+"/"+name
-            # ffmpeg.input(mp4+".mp4").video.filter("scale", 480, -1).output(mp4+".gif", framerate=30).overwrite_output().run_async()
-            subprocess.run(["ffmpeg","-i",mp4+".mp4","-r","30","-vf","scale=480:-1",mp4+".gif","-y"])
+            ffmpeg.input(mp4+".mp4").video.filter("scale", 480, -1).output(mp4+".gif", framerate=30).overwrite_output().run_async()
+            # subprocess.run(["ffmpeg","-i",mp4+".mp4","-r","30","-vf","scale=480:-1",mp4+".gif","-y"])
 
           # edit html of any field with a mp4 video into gif format
           oldnote = note[field]
           note[field] = re.sub(r'\[sound:(.*?)\.mp4\]', r'<img src="\1.gif" />', note[field])
->>>>>>> main
           if note[field] != oldnote: count += 1
         note.flush()
 
